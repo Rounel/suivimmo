@@ -27,7 +27,9 @@ export default function Header() {
     <div className="w-full flex items-center justify-between p-4 border-b fixed top-0 left-0">
         <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-                <span className="font-semibold text-lg">SUIVIMMO</span>
+                <Link href={'/'} className="">
+                    <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-br from-purple-900 to-indigo-500">SUIVIMMO</span>
+                </Link>
                 {/* <span className="text-gray-400 text-lg"></span> */}
             </div>
         </div>

@@ -29,6 +29,25 @@ import {
 import MapPage from "@/presentation/components/Map/MapPage"
 import Image from "next/image"
 import Link from "next/link"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"
+
+import { Combobox } from "@/components/combobox"
+import { useForm } from "react-hook-form"
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form"
 
 export default function Component() {
   const [activeTab, setActiveTab] = useState("properties")
@@ -171,9 +190,36 @@ export default function Component() {
         return <Building className="w-4 h-4" />
     }
   }
+  
+  const form = useForm({
+    defaultValues: {
+      nom: "",
+      description: "",
+      adresse: "",
+      superficie: "",
+      etage: "",
+      nb_pieces: "",
+      nb_toilettes: "",
+      nb_sdb: "",
+      nb_combine: "",
+      nb_chambres: "",
+      nb_salons: "",
+      type: "residence",
+      loyer: "",
+      loyer_negociable: false,
+      key_features: "",
+      caution: "",
+      longitude: "",
+      latitude: "",
+      attachments: [],
+      photos: [],
+      disponibilite: "disponible",
+      derniere_occupation: "",
+    },
+  });
 
   return (
-      <div className="mx-auto pt-[69px] max-h-screen min-h-screen bg-white rounded-3xl shadow-2xl overflow-hidden">
+      <div className="mx-auto pt-[73px] max-h-screen min-h-screen bg-white rounded-3xl shadow-2xl overflow-hidden">
         <div className="flex">
           {/* Left Sidebar */}
           <div className="w-80 p-6 border-r bg-gray-50 overflow-y-auto">
@@ -336,13 +382,14 @@ export default function Component() {
 
           {/* Map Area */}
           {showMap && (
-            <MapPage />
+            <div className="flex justify-center items-center flex-1 relative px-2">
+              <MapPage />
+            </div>
           )}
 
           {/* Right Sidebar - Property Results */}
           <div className={`${showMap ? "w-80" : "flex-1"} p-4 h-[93dvh] overflow-y-auto transition-all duration-300`}>
             <div className="flex items-center justify-between mb-4">
-              <span className="font-medium">16 Results</span>
               <div className="flex items-center gap-2">
                 <div className="flex items-center border rounded-lg p-1">
                   <Button
@@ -363,6 +410,267 @@ export default function Component() {
                   </Button>
                 </div>
               </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant={"default"}
+                    size="sm"
+                    onClick={() => setViewMode("grid")}
+                    className={`p-2 bg-purple-600 text-white`}
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    New property
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="md:min-w-7xl max-h-[85dvh] w-full">
+                    <DialogHeader>
+                        <DialogTitle>Ajouter une propriété</DialogTitle>
+                    </DialogHeader>
+                    <Form {...form}>
+                        <form className="flex flex-col gap-4" onSubmit={form.handleSubmit((data) => console.log(data))}>
+                          <div className="grid md:grid-cols-2 gap-3">
+                            {/* Nom */}
+                            <FormField control={form.control} name="nom" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Nom</FormLabel>
+                                <FormControl>
+                                  <input type="text" {...field} className="w-full border rounded px-3 py-2" required />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Description */}
+                            <FormField control={form.control} name="description" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Description</FormLabel>
+                                <FormControl>
+                                  <textarea {...field} className="w-full border rounded px-3 py-2" rows={2} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Adresse */}
+                            <FormField control={form.control} name="adresse" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Adresse</FormLabel>
+                                <FormControl>
+                                  <input type="text" {...field} className="w-full border rounded px-3 py-2" required />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                          <div className="grid grid-cols-3 gap-3">
+                            {/* Type */}
+                            <FormField control={form.control} name="type" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Type</FormLabel>
+                                <FormControl>
+                                  <select {...field} className="w-full border rounded px-3 py-2">
+                                    <option value="residence">Résidence</option>
+                                    <option value="appartement">Appartement</option>
+                                    <option value="studio">Studio</option>
+                                    <option value="magasin">Magasin</option>
+                                  </select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Superficie */}
+                            <FormField control={form.control} name="superficie" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Superficie (m²)</FormLabel>
+                                <FormControl>
+                                  <input type="number" {...field} className="w-full border rounded px-3 py-2" min={0} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Etage */}
+                            <FormField control={form.control} name="etage" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Étage</FormLabel>
+                                <FormControl>
+                                  <input type="number" {...field} className="w-full border rounded px-3 py-2" min={0} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                          </div>
+                          {/* Disponibilité */}
+                          <FormField control={form.control} name="disponibilite" render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Disponibilité</FormLabel>
+                              <FormControl>
+                                <select {...field} className="w-full border rounded px-3 py-2">
+                                  <option value="disponible">Disponible</option>
+                                  <option value="occupee">Occupée</option>
+                                  <option value="en_renovation">En rénovation</option>
+                                </select>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )} />
+                          {/* Date de dernière occupation */}
+                          <FormField control={form.control} name="derniere_occupation" render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Date de dernière occupation</FormLabel>
+                              <FormControl>
+                                <input type="date" {...field} className="w-full border rounded px-3 py-2" />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )} />
+                          <div className="grid grid-cols-3 gap-3">
+                            {/* Nombre de toilettes */}
+                            <FormField control={form.control} name="nb_toilettes" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Nombre de toilettes</FormLabel>
+                                <FormControl>
+                                  <input type="number" {...field} className="w-full border rounded px-3 py-2" min={0} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Nombre de salles de bain */}
+                            <FormField control={form.control} name="nb_sdb" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Nombre de salles de bain</FormLabel>
+                                <FormControl>
+                                  <input type="number" {...field} className="w-full border rounded px-3 py-2" min={0} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Nombre de combinés (toilettes/salle de bain) */}
+                            <FormField control={form.control} name="nb_combine" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Nombre de combinés</FormLabel>
+                                <FormControl>
+                                  <input type="number" {...field} className="w-full border rounded px-3 py-2" min={0} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                          </div>
+                          <div className="grid grid-cols-3 gap-3">
+                            {/* Nombre de pièces */}
+                            <FormField control={form.control} name="nb_pieces" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Nombre de pièces</FormLabel>
+                                <FormControl>
+                                  <input type="number" {...field} className="w-full border rounded px-3 py-2" min={0} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Nombre de chambres */}
+                            <FormField control={form.control} name="nb_chambres" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Nombre de chambres</FormLabel>
+                                <FormControl>
+                                  <input type="number" {...field} className="w-full border rounded px-3 py-2" min={0} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Nombre de salons */}
+                            <FormField control={form.control} name="nb_salons" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Nombre de salons</FormLabel>
+                                <FormControl>
+                                  <input type="number" {...field} className="w-full border rounded px-3 py-2" min={0} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                          </div>
+                          <div className="grid grid-cols-3 gap-3">
+                            {/* Caution */}
+                            <FormField control={form.control} name="caution" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Caution (FCFA)</FormLabel>
+                                <FormControl>
+                                  <input type="number" {...field} className="w-full border rounded px-3 py-2" min={0} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Loyer */}
+                            <FormField control={form.control} name="loyer" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Loyer (FCFA)</FormLabel>
+                                <FormControl>
+                                  <input type="number" {...field} className="w-full border rounded px-3 py-2" min={0} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Loyer négociable */}
+                            <FormField control={form.control} name="loyer_negociable" render={({ field }) => (
+                              <FormItem className="flex flex-row items-center gap-2 mt-6">
+                                <FormControl>
+                                  <input type="checkbox" checked={field.value} onChange={e => field.onChange(e.target.checked)} />
+                                </FormControl>
+                                <FormLabel className="mb-0">Loyer négociable</FormLabel>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                          </div>
+                            {/* Key features */}
+                            <FormField control={form.control} name="key_features" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Caractéristiques clés (séparées par des virgules)</FormLabel>
+                                <FormControl>
+                                  <input type="text" {...field} className="w-full border rounded px-3 py-2" placeholder="Ex: Balcon, Parking, Ascenseur" />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Mini-map (longitude, latitude) */}
+                            <FormField control={form.control} name="longitude" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Longitude</FormLabel>
+                                <FormControl>
+                                  <input type="text" {...field} className="w-full border rounded px-3 py-2" placeholder="Longitude" />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            <FormField control={form.control} name="latitude" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Latitude</FormLabel>
+                                <FormControl>
+                                  <input type="text" {...field} className="w-full border rounded px-3 py-2" placeholder="Latitude" />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Attachments */}
+                            <FormField control={form.control} name="attachments" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Pièces jointes</FormLabel>
+                                <FormControl>
+                                  <input type="file" multiple onChange={e => field.onChange(e.target.files)} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                            {/* Photos */}
+                            <FormField control={form.control} name="photos" render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Photos</FormLabel>
+                                <FormControl>
+                                  <input type="file" multiple onChange={e => field.onChange(e.target.files)} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )} />
+                          </div>
+                          <Button type="submit" className="bg-violet-600 hover:bg-violet-700 rounded-xl mt-2">Créer</Button>
+                        </form>
+                    </Form>
+                </DialogContent>    
+              </Dialog>
             </div>
 
             {/* Grid View */}

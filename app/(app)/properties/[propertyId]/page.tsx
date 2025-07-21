@@ -227,7 +227,7 @@ export default function PropertyDetails() {
   ];
 
   return (
-    <div className="mx-auto pt-[69px] max-h-screen min-h-screen bg-white rounded-3xl shadow-2xl overflow-y-auto">
+    <div className="mx-auto pt-[73px] max-h-screen min-h-screen bg-white rounded-3xl shadow-2xl overflow-y-auto">
         <div className="py-2 px-2 sm:px-4 lg:px-8">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                 <TabsList className="grid w-fit grid-cols-2 mb-8 bg-gray-100 rounded-2xl p-1">

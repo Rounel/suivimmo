@@ -4,9 +4,10 @@ import { MapContainer, TileLayer } from "react-leaflet";
 
 export default function MapClient() {
   return (
-    <MapContainer center={[48.8566, 2.3522]} zoom={16}>
+    <MapContainer center={[48.8566, 2.3522]} zoom={16} className="w-full min-w-full">
       {/* OPEN STREEN MAPS TILES */}
       <TileLayer
+      className="w-full"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
