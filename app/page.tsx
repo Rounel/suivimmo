@@ -1,6 +1,43 @@
+"use client"
+
+import { ChartArea, CreditCard, FileArchive, House, MessageCircle, User } from "lucide-react";
+
+const features = [
+  {
+    icon: House,
+    title: 'Locations',
+    description: 'Recherche les locations à proximité et/ou expose les tiennes.',
+  },
+  {
+    icon: User,
+    title: 'Locataires',
+    description: 'Gère tes locataires et garde un historique commenté des passages dans ta propriété.',
+  },
+  {
+    icon: FileArchive,
+    title: 'Documents',
+    description: 'Numérise et stock tous les documents utiles à ta gestion.',
+  },
+  {
+    icon: CreditCard,
+    title: 'Paiements',
+    description: 'Gère les paiements et garde un historique de toutes les transactions.',
+  },
+  {
+    icon: ChartArea,
+    title: 'Dashboard',
+    description: 'Déduis la rentabilité de ton business et analyse les tendances en visualisant tes données.',
+  },
+  {
+    icon: MessageCircle,
+    title: 'Communication & Relance',
+    description: 'Discute avec les locataires actuels ou potentiels et programme des relances.',
+  },
+];
+
 export default function AlfredHero() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-[100dvh] max-h-[100dvh] flex flex-col overflow-hidden">
         {/* Geometric line decorations */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Top left lines */}
@@ -33,119 +70,135 @@ export default function AlfredHero() {
         </div>
 
         {/* Header */}
-        <header className="relative z-10 flex items-center justify-between px-16 py-6">
+        <header className="relative z-10 flex items-center justify-between px-16 py-4">
           <div className="flex items-center space-x-2">
             <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-br from-purple-900 to-indigo-500">SUIVIMMO</span>
           </div>
 
-          <button className="bg-black text-white px-6 py-3 rounded-lg flex items-center space-x-2 font-medium">
-            <span>🍎</span>
-            <span>Download Alfred</span>
-          </button>
+          <div className="flex gap-3">
+            <button className="bg-violet-800 text-white px-6 py-3 rounded-lg flex items-center space-x-2 font-medium">
+              Se connecter
+            </button>
+            <button className="bg-black text-white px-6 py-3 rounded-lg flex items-center space-x-2 font-medium">
+              S'inscrire
+            </button>
+          </div>
         </header>
 
         {/* Main Hero Content */}
-        <main className="relative z-10 px-16 py-20">
+        <main className="relative z-10 px-16 py-2 flex-1 flex flex-col">
           {/* Purple diamond background */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-purple-200 opacity-30 rotate-45 rounded-3xl"></div>
 
-          <div className="text-center relative z-20">
-            <h1 className="text-7xl font-light text-black mb-16 leading-tight">
-              Exposez vos propriétés, Suivez vos loyers,
-              <br />
-              Gérez vos locataires, Sans effort.
-            </h1>
+          <div className="grid md:grid-cols-3 gap-10 flex-1 relative z-20">
+            <div className="col-span-2 flex flex-col justify-between">
+              <div className="flex flex-col gap-8">
+                <h1 className="text-7xl font-bold text-black leading-tight">
+                  Recherchez les locations,
+                  <br />
+                  Gerez vos biens de A à Z,
+                  <br />
+                  <span className=" bg-clip-text text-transparent bg-gradient-to-br from-purple-900 to-indigo-500">
+                    Sans effort
+                  </span>
+                </h1>
 
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-24">
-              <div className="bg-white border-2 border-gray-300 rounded-full px-6 py-4 flex items-center justify-between shadow-sm">
-                <span className="text-gray-600 text-lg">Boost your efficiency with hotkeys and AI</span>
-                <div className="bg-gray-100 px-4 py-2 rounded-lg">
-                  <span className="text-gray-700 font-mono text-sm">⌘+⌥+B</span>
+                <div className="">
+                  <button className="bg-violet-800 text-white px-8 py-3 rounded-lg flex items-center font-medium">
+                    C'est parti !!!
+                  </button>
+                </div>
+              </div>
+
+              <div className="w-full">
+
+                {/* Feature Cards */}
+                <div className="grid grid-cols-3 gap-16">
+                {features.map(({ icon: Icon, title, description }) => (
+                  <div key={title} className="flex flex-col gap-2">
+                    <div className="">{Icon && <Icon className="size-10" />}</div>
+                    <h3 className="text-xl font-medium text-black">{title}</h3>
+                    <p className="text-gray-600 text-base ">{description}</p>
+                  </div>
+                ))}
                 </div>
               </div>
             </div>
 
-            {/* Feature Cards */}
-            <div className="grid grid-cols-3 gap-16 max-w-6xl mx-auto">
-              {/* Workflows */}
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-6">
-                  <svg viewBox="0 0 64 64" className="w-full h-full">
-                    <path
-                      d="M16 48h8v8h-8zm24-16h8v8h-8zm0 16h8v8h-8z"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    />
-                    <path
-                      d="M20 20c0-2.2 1.8-4 4-4h16c2.2 0 4 1.8 4 4v8c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4v-8z"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-medium text-black mb-4">Workflows</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                  You can extend Alfred and get
-                  <br />
-                  things done in your own way.
-                </p>
-              </div>
-
-              {/* Revolutionize */}
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-6">
-                  <svg viewBox="0 0 64 64" className="w-full h-full">
-                    <circle cx="32" cy="32" r="24" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <circle cx="32" cy="32" r="12" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <path d="M32 8v8m0 32v8m24-24h-8m-32 0H8" stroke="currentColor" strokeWidth="2" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-medium text-black mb-4">Revolutionize</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                  Advanced AI technologies for
-                  <br />
-                  the betterment of humanity.
-                </p>
-              </div>
-
-              {/* Powerpack */}
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-6">
-                  <svg viewBox="0 0 64 64" className="w-full h-full">
-                    <path d="M20 16h24l4 8-4 8H20l-4-8z" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <path d="M28 32l8-8m-8 0l8 8" stroke="currentColor" strokeWidth="2" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-medium text-black mb-4">Powerpack</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                  Use it to customise your Mac
-                  <br />
-                  and make you more productive.
-                </p>
+            <div className="flex justify-center items-center bg-[url('/hero-bg.jpg')] bg-cover bg-no-repeat rounded-2xl">
+              {/* Search Bar */}
+              <div className="bg-white border-2 border-gray-300 px-6 py-4 flex items-center justify-between shadow-sm">
+                <form
+                  className="flex flex-col w-full gap-2"
+                  onSubmit={e => {
+                    e.preventDefault();
+                    const form = e.currentTarget;
+                    const params = new URLSearchParams();
+                    const mainInput = form.querySelector('input[name="search"]');
+                    if (mainInput && mainInput.value.trim()) {
+                      params.set('query', mainInput.value.trim());
+                    }
+                    // Ajout des autres champs
+                    [
+                      'nom', 'description', 'adresse', 'superficie', 'etage', 'nb_pieces', 'nb_toilettes', 'nb_sdb', 'nb_combine', 'nb_chambres', 'nb_salons', 'type', 'loyer', 'loyer_negociable', 'key_features', 'caution', 'longitude', 'latitude', 'disponibilite', 'derniere_occupation'
+                    ].forEach(name => {
+                      const el = form.querySelector(`[name="${name}"]`);
+                      if (el instanceof HTMLInputElement || el instanceof HTMLSelectElement) {
+                        const value = el.value;
+                        if (value && value !== '') {
+                          params.set(name, value);
+                        }
+                      }
+                    });
+                    window.location.href = `/search?${params.toString()}`;
+                  }}
+                >
+                  <div className="grid grid-cols-2 gap-2">
+                    {/* Filtres avancés */}
+                    <input name="adresse" type="text" placeholder="Adresse" className="px-2 py-1 rounded border border-gray-200" />
+                    <input name="superficie" type="number" min="0" placeholder="Superficie (m²)" className="px-2 py-1 rounded border border-gray-200 w-24" />
+                    <input name="etage" type="number" min="0" placeholder="Étage" className="px-2 py-1 rounded border border-gray-200 w-16" />
+                    <input name="nb_pieces" type="number" min="0" placeholder="Pièces" className="px-2 py-1 rounded border border-gray-200 w-16" />
+                    <input name="nb_chambres" type="number" min="0" placeholder="Chambres" className="px-2 py-1 rounded border border-gray-200 w-16" />
+                    <input name="nb_salons" type="number" min="0" placeholder="Salons" className="px-2 py-1 rounded border border-gray-200 w-16" />
+                    <input name="nb_toilettes" type="number" min="0" placeholder="Toilettes" className="px-2 py-1 rounded border border-gray-200 w-16" />
+                    <input name="nb_sdb" type="number" min="0" placeholder="Salles de bain" className="px-2 py-1 rounded border border-gray-200 w-20" />
+                    <input name="nb_combine" type="number" min="0" placeholder="Combiné s" className="px-2 py-1 rounded border border-gray-200 w-16" />
+                    <select name="type" className="px-2 py-1 rounded border border-gray-200">
+                      <option value="">Type</option>
+                      <option value="residence">Résidence</option>
+                      <option value="studio">Studio</option>
+                      <option value="appartement">Appartement</option>
+                      <option value="commerce">Commerce</option>
+                    </select>
+                    <input name="loyer" type="number" min="0" placeholder="Loyer max" className="px-2 py-1 rounded border border-gray-200 w-24" />
+                    <select name="loyer_negociable" className="px-2 py-1 rounded border border-gray-200">
+                      <option value="">Loyer négociable ?</option>
+                      <option value="true">Oui</option>
+                      <option value="false">Non</option>
+                    </select>
+                    <input name="key_features" type="text" placeholder="Caractéristiques clés" className="px-2 py-1 rounded border border-gray-200" />
+                    <input name="caution" type="number" min="0" placeholder="Caution max" className="px-2 py-1 rounded border border-gray-200 w-24" />
+                    <input name="longitude" type="text" placeholder="Longitude" className="px-2 py-1 rounded border border-gray-200 w-24" />
+                    <input name="latitude" type="text" placeholder="Latitude" className="px-2 py-1 rounded border border-gray-200 w-24" />
+                    <select name="disponibilite" className="px-2 py-1 rounded border border-gray-200">
+                      <option value="">Disponibilité</option>
+                      <option value="disponible">Disponible</option>
+                      <option value="indisponible">Indisponible</option>
+                    </select>
+                    <input name="derniere_occupation" type="text" placeholder="Dernière occupation" className="px-2 py-1 rounded border border-gray-200" />
+                  </div>
+                  <button
+                    type="submit"
+                    className="ml-2 bg-violet-800 text-white px-6 py-2 rounded-full font-medium hover:bg-violet-900 transition"
+                  >
+                    Rechercher
+                  </button>
+                </form>
               </div>
             </div>
           </div>
         </main>
-
-        {/* Footer */}
-        <footer className="relative z-10 flex items-center justify-between px-16 py-8">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-              <span className="text-white text-xs font-bold">AI</span>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-black">OpenAI</div>
-              <div className="text-xs text-gray-600">Supported</div>
-            </div>
-          </div>
-
-          <a href="#" className="text-black font-medium hover:underline">
-            {"What's new?"}
-          </a>
-        </footer>
     </div>
   )
 }
